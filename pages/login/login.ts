@@ -1,6 +1,8 @@
 import { isEmail, removeError, showError } from '../../helpers/helper';
 import '../../global.scss';
 import './login.scss';
+import axios from "axios";
+
 
 let errors: { email: string[]; password: string[] } = {
     email: [],
@@ -8,7 +10,14 @@ let errors: { email: string[]; password: string[] } = {
 };
 
 let emailSignIn = document.getElementById("signIn") as HTMLInputElement;
+
 emailSignIn.addEventListener("keyup", addAndRemoveErrorEmail);
+emailSignIn.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+        logInUser()
+    }
+});
+
 function addAndRemoveErrorEmail() {
     errors.email = [];
     let emailValue = emailSignIn.value;
@@ -30,7 +39,14 @@ function addAndRemoveErrorEmail() {
 };
 
 let Password = document.getElementById("Password") as HTMLInputElement;
+
 Password.addEventListener("keyup", addAndRemoveErrorPassword);
+Password.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+        logInUser()
+    }
+});
+
 function addAndRemoveErrorPassword() {
     errors.password = [];
     let PasswordValue = Password.value;
@@ -63,8 +79,21 @@ function updateButton() {
     } else {
         loginButton.disabled = false;
     }
-}
+};
 
+loginButton.addEventListener("click", logInUser)
+function logInUser() {
+    axios.post('http://127.0.0.1:9696/authentication/dashboard_login', {
+        email: "ash@trainee-mart.com",
+        password: "12345678"
+    })
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 
 
