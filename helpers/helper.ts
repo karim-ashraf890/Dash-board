@@ -1,10 +1,17 @@
 export function showError(id: string, messages: string[]) {
+    removeError(id);
     let input = document.getElementById(id);
     input.classList.add('inputerror');
     const errorMessage = document.createElement('div');
     errorMessage.classList.add("messageerror");
     errorMessage.id = "messageerror" + id;
-    errorMessage.textContent = "" + messages;
+    for (let i = 0; i < messages.length; i++) {
+        if (i == messages.length - 1) {
+            errorMessage.innerHTML += messages[i];
+        } else {
+            errorMessage.innerHTML += messages[i] + "<br>";
+        }
+    }
     input.insertAdjacentElement('afterend', errorMessage);
 };
 
