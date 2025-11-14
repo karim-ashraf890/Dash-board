@@ -3,6 +3,10 @@ import '../../global.scss';
 import './login.scss';
 import axios from "axios";
 
+let token = localStorage.getItem("accessToken");
+if (token) {
+    window.location.href = "/index.html";
+}
 
 let errors: { email: string[]; password: string[] } = {
     email: [],
@@ -83,18 +87,36 @@ function updateButton() {
 
 loginButton.addEventListener("click", logInUser)
 function logInUser() {
+    const emailValue = (document.getElementById("signIn") as HTMLInputElement).value;
+    const passwordValue = (document.getElementById("Password") as HTMLInputElement).value;
     axios.post('http://127.0.0.1:9696/authentication/dashboard_login', {
-        email: "ash@trainee-mart.com",
-        password: "12345678"
+        email: emailValue,
+        password: passwordValue
     })
         .then(function (response) {
             console.log(response.data);
+
+            localStorage.setItem("accessToken", response.data.access_token);
         })
         .catch(function (error) {
-            console.log(error);
+
+            if (error.response && error.response.data && error.response.data.error) {
+
+                let errorMessage: string = error.response.data.error.message;
+                let container = document.getElementById("errorContainer") as HTMLElement;
+
+                container.innerHTML = "";
+
+                let message = document.createElement("p");
+
+                container.appendChild(message);
+                message.innerText = errorMessage;
+                message.classList.add("error-message");
+
+                console.log(error.response.data.error.message + " hiiiiiiiii");
+            }
         });
 }
-
 
 
 

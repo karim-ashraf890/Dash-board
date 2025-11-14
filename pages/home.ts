@@ -2,6 +2,10 @@ import '../global.scss';
 import './home.scss';
 import axios from "axios";
 
+let token = localStorage.getItem("accessToken");
+if (!token) {
+    window.location.href = "/login.html";
+}
 // function getuser() {
 //     axios.get('https://jsonplaceholder.typicode.com/posts')
 //         .then(function (response) {
@@ -36,3 +40,4 @@ import axios from "axios";
 // localStorage.setItem("token", "fhggkhfghdgjhfhjdgjdgdxgj");
 // console.log(localStorage.getItem("token"));
 // localStorage.removeItem("token")
+
