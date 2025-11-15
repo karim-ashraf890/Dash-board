@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -26,6 +27,20 @@ module.exports = {
                     'sass-loader',
                 ],
             },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'images/[hash][ext][query]',
+                },
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[hash][ext][query]',
+                },
+            }
         ],
     },
 
@@ -46,6 +61,11 @@ module.exports = {
             template: './pages/settings/settings.html',
             chunks: ['settings'],
         }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'assets', to: 'assets' },
+            ],
+        }),
     ],
 
     resolve: {
@@ -55,6 +75,7 @@ module.exports = {
     output: {
         filename: '[name].js', // home.js, login.js, settings.js
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
         clean: true,
     },
 

@@ -97,6 +97,7 @@ function logInUser() {
             console.log(response.data);
 
             localStorage.setItem("accessToken", response.data.access_token);
+            window.location.href = "/index.html";
         })
         .catch(function (error) {
 
@@ -104,7 +105,6 @@ function logInUser() {
 
                 let errorMessage: string = error.response.data.error.message;
                 let container = document.getElementById("errorContainer") as HTMLElement;
-
                 container.innerHTML = "";
 
                 let message = document.createElement("p");
