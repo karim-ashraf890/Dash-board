@@ -1,12 +1,19 @@
-.nav-bar{
-    background-color: #142D4C;
-    height: 100vh;
+.welcome-box {
+    height: 100vh; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
 }
-.hyder{
-    height: 50px;
-box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+
+
+.welcome-title {
+    font-size: 100px;
+    font-weight: 800;
+    color: #142D4C; 
+    animation: fadeSlide 2s ease-in-out infinite alternate;
 }
-.navbarcontrolicon{
-    margin-top: 9px;
-    font-size: 20px;
+
+@keyframes fadeSlide {
+    0% { opacity: 0.4; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0px); }
 }

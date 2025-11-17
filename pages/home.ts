@@ -1,55 +1,25 @@
 import '../global.scss';
+import './common/sideMenu.scss';
 import './home.scss';
+import './common/sideMenu';
 import axios from "axios";
 
-let token = localStorage.getItem("accessToken");
-if (!token) {
-    window.location.href = "/login.html";
+const currentPage = window.location.pathname;
+const links = document.querySelectorAll(".side-menu-link");
+
+let activeAdded = false;
+
+links.forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
+        link.classList.add("active");
+        activeAdded = true;
+    }
+});
+
+// لو مفيش صفحة مطابقة — خلّي أول واحدة Active افتراضيًا
+if (!activeAdded && links.length > 0) {
+    links[1].classList.add("active"); // أول واحدة بعد الـ Profile
 }
-
-
-
-const CloseIcon = document.getElementById("closing") as HTMLElement;
-const OpenIcon = document.getElementById("open") as HTMLElement;
-const navBar = document.getElementById("navBar") as HTMLElement;
-const home = document.getElementById("home") as HTMLElement;
-
-function removeCols(element: HTMLElement) {
-    element.classList.forEach((cls: string) => {
-        if (cls.startsWith("col-")) {
-            element.classList.remove(cls);
-        }
-    });
-}
-
-function navbarContro() {
-    CloseIcon.style.display = "inline-block";
-    OpenIcon.style.display = "none";
-
-    CloseIcon.addEventListener("click", () => {
-        removeCols(navBar);
-        removeCols(home);
-        navBar.classList.add("col-1");
-        home.classList.add("col-11");
-
-        CloseIcon.style.display = "none";
-        OpenIcon.style.display = "inline-block";
-    });
-
-    OpenIcon.addEventListener("click", () => {
-        removeCols(navBar);
-        removeCols(home);
-        navBar.classList.add("col-2");
-        home.classList.add("col-10");
-
-        CloseIcon.style.display = "inline-block";
-        OpenIcon.style.display = "none";
-    });
-}
-
-window.addEventListener("DOMContentLoaded", navbarContro);
-
-
 
 // function getuser() {
 //     axios.get('https://jsonplaceholder.typicode.com/posts')

@@ -8,6 +8,16 @@ if (token) {
     window.location.href = "/index.html";
 }
 
+let refreshToken = localStorage.getItem("refreshToken");
+
+let user = localStorage.getItem("user");
+
+if (user) {
+    console.log(user);
+}
+
+
+
 let errors: { email: string[]; password: string[] } = {
     email: [],
     password: [],
@@ -97,6 +107,9 @@ function logInUser() {
             console.log(response.data);
 
             localStorage.setItem("accessToken", response.data.access_token);
+            localStorage.setItem("refreshToken", response.data.refresh_token);
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+
             window.location.href = "/index.html";
         })
         .catch(function (error) {

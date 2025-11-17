@@ -7,9 +7,11 @@ module.exports = {
 
     // 1) one entry per page
     entry: {
+        common: './pages/common/sideMenu.ts',
         home: './pages/home.ts',
         login: './pages/login/login.ts',
         settings: './pages/settings/settings.ts',
+        admins: './pages/Admins/admins.ts'
     },
 
     module: {
@@ -60,6 +62,11 @@ module.exports = {
             filename: 'settings.html',
             template: './pages/settings/settings.html',
             chunks: ['settings'],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'admins.html',
+            template: './pages/Admins/admins.html',
+            chunks: ['admins'],
         }),
         new CopyWebpackPlugin({
             patterns: [
