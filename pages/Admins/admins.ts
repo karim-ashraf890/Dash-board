@@ -32,18 +32,13 @@ function getAdmins() {
         })
         .catch((error) => {
             console.error("Error fetching data:", error);
-
             if (error.response && error.response.status === 401) {
-                console.log("Access token expired, refreshing...");
-
                 axios.get(apiUrl + "/authentication/refresh-token", {
                     headers: {
                         Authorization: refreshToken
                     }
                 })
                     .then((response) => {
-                        console.log("Refresh response full:", response);
-
                         // التعامل مع أي شكل للـ response
                         const newAccess = response.data.data?.access_token || response.data.access_token;
                         const newRefresh = response.data.data?.refresh_token || response.data.refresh_token;
@@ -54,8 +49,6 @@ function getAdmins() {
                         localStorage.setItem("accessToken", token);
                         localStorage.setItem("refreshToken", refreshToken);
 
-                        console.log("New access token =", token);
-
                         return axios.get(apiUrl + "/admins?page=1", {
                             headers: {
                                 Authorization: token
@@ -63,7 +56,6 @@ function getAdmins() {
                         });
                     })
                     .then((response) => {
-                        console.log("Data after refresh:", response.data);
                     })
                     .catch((error) => {
                         console.error("Error refreshing token:", error);
