@@ -4,22 +4,6 @@ import './home.scss';
 import './common/sideMenu';
 import axios from "axios";
 
-const currentPage = window.location.pathname;
-const links = document.querySelectorAll(".side-menu-link");
-
-let activeAdded = false;
-
-links.forEach(link => {
-    if (link.getAttribute("href") === currentPage) {
-        link.classList.add("active");
-        activeAdded = true;
-    }
-});
-
-// لو مفيش صفحة مطابقة — خلّي أول واحدة Active افتراضيًا
-if (!activeAdded && links.length > 0) {
-    links[1].classList.add("active"); // أول واحدة بعد الـ Profile
-}
 
 // function getuser() {
 //     axios.get('https://jsonplaceholder.typicode.com/posts')
