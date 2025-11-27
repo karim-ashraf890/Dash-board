@@ -7,6 +7,7 @@ module.exports = {
 
     // 1) one entry per page
     entry: {
+        apis: './api/api.ts',
         common: './pages/common/sideMenu.ts',
         home: './pages/home.ts',
         login: './pages/login/login.ts',
