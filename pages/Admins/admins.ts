@@ -139,7 +139,6 @@ function getAdmins() {
             }
         })
         .then((response) => {
-            console.log("Data:", response.data);
             renderAdmins(response.data.admins);
         })
         .catch((error) => {
@@ -156,13 +155,13 @@ function getAdmins() {
                             });
                     })
                     .then((response) => {
-                        console.log("Data after refresh:", response.data);
                         renderAdmins(response.data.admins);
                     })
-                    .catch((error) => {
-                        console.error("Error refreshing token:", error);
+                    .catch((err) => {
+                        localStorage.clear();
                         window.location.href = "/login.html";
                     });
+
             }
         });
 }
