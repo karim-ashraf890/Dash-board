@@ -12,7 +12,9 @@ module.exports = {
         home: './pages/home.ts',
         login: './pages/login/login.ts',
         settings: './pages/settings/settings.ts',
-        admins: './pages/Admins/admins.ts'
+        admins: './pages/Admins/admins.ts',
+        addAdmin: './pages/Admins/add.ts',
+        editAdmin: './pages/Admins/edit.ts'
     },
 
     module: {
@@ -69,6 +71,22 @@ module.exports = {
             template: './pages/Admins/admins.html',
             chunks: ['admins'],
         }),
+        new HtmlWebpackPlugin({
+            filename: 'admins.html',
+            template: './pages/Admins/admins.html',
+            chunks: ['admins'],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'add.html',
+            template: './pages/Admins/add.html',
+            chunks: ['addAdmin'],    // ✅
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'edit.html',
+            template: './pages/Admins/edit.html',
+            chunks: ['editAdmin'],   // ✅
+        }),
+
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'assets', to: 'assets' },

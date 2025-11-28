@@ -15,7 +15,7 @@ let refreshToken = localStorage.getItem("refreshToken");
 const addNewBtn = document.getElementById("addNewBtn");
 
 addNewBtn.addEventListener("click", () => {
-    window.location.href = "/Add-new.html";
+    window.location.href = "add.html";
 });
 
 
@@ -157,7 +157,7 @@ function getAdmins() {
                     .then((response) => {
                         renderAdmins(response.data.admins);
                     })
-                    .catch((err) => {
+                    .catch((error) => {
                         localStorage.clear();
                         window.location.href = "/login.html";
                     });
