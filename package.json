@@ -28,6 +28,7 @@
     "bootstrap": "^5.3.8",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
+    "flag-icons": "^7.5.0",
     "lodash": "^4.17.21",
     "style-loader": "^4.0.0"
   }
