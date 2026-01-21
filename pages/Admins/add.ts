@@ -170,9 +170,20 @@ function validateConfirmPassword() {
         removeError("ConfirmPassword");
     }
 }
+const selectAll = document.getElementById("selectAllPermissions") as HTMLInputElement;
 
+selectAll.addEventListener("change", function () {
+    const permissionCheckboxes = document.querySelectorAll<HTMLInputElement>(".perm-input");
+    for (let i = 0; i < permissionCheckboxes.length; i++) {
+        permissionCheckboxes[i].checked = selectAll.checked;
+    }
+});
 
-
+function updateSelectAllState() {
+    const permissionCheckboxes = document.querySelectorAll<HTMLInputElement>(".perm-input");
+    const allChecked = Array.from(permissionCheckboxes).every(cb => cb.checked);
+    selectAll.checked = allChecked; // لو كلهم checked يبقى All checked
+}
 interface Permission {
     id: number;
     name_en: string;
@@ -191,28 +202,25 @@ axios.get(apiUrl + "/permissions")
         for (let i = 0; i < permissions.length; i++) {
 
             const perm = permissions[i];
-            // col
+
             const col = document.createElement("div");
             col.className = "col-md-3 col-sm-6 mb-2 perm-col";
 
-            // form-check
             const formCheck = document.createElement("div");
             formCheck.className = "form-check perm-check";
 
-            // input
             const input = document.createElement("input");
             input.type = "checkbox";
             input.className = "form-check-input perm-input";
             input.value = perm.id.toString();
             input.id = "perm_" + perm.id;
+            input.addEventListener("change", updateSelectAllState);
 
-            // label
             const label = document.createElement("label");
             label.className = "form-check-label perm-label";
             label.htmlFor = input.id;
             label.textContent = perm.name_en;
 
-            // build
             formCheck.appendChild(input);
             formCheck.appendChild(label);
             col.appendChild(formCheck);
@@ -220,13 +228,9 @@ axios.get(apiUrl + "/permissions")
         }
 
     })
-    .catch(error => console.log(error));
-
-
-
-
-
-
+    .catch(function (error) {
+        console.log(error);
+    })
 
 const avatarPreview = document.getElementById('avatarPreview') as HTMLImageElement;
 const avatarInput = document.getElementById('avatarInput') as HTMLInputElement;
