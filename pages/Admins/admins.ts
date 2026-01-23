@@ -194,9 +194,6 @@ function getAdmins(pageNumer: number = 1, search: string) {
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-// // urlParams.set('search', 'ooo');
-const newUrl = window.location.pathname + '?' + urlParams.toString();
-window.history.replaceState(null, '', newUrl);
 getAdmins(parseInt(urlParams.get('page')), urlParams.get('search'));
 
 function initSearch() {

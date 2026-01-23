@@ -46,6 +46,8 @@ function navbarContro() {
         profileName.style.display = "none";
         sideMenuImg.classList.add("side-menu-profile-big");
         sideMenuIcon.classList.add("side-menu-icon-big");
+        document.body.classList.add("nav-collapsed");
+
 
 
         CloseIcon.style.display = "none";
@@ -67,6 +69,8 @@ function navbarContro() {
         profileName.style.display = "inline-block";
         sideMenuImg.classList.remove("side-menu-profile-big");
         sideMenuIcon.classList.remove("side-menu-icon-big");
+        document.body.classList.remove("nav-collapsed");
+
 
         menuTitles.forEach(title => {
             title.style.display = "inline-block";

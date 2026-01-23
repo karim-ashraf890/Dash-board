@@ -1,32 +1,48 @@
-#home{
+// #home {
+//     background-color: #F5F5F5;
+// }
+#home {
     background-color: #F5F5F5;
-}
-.nav-bar{
-    background-color: #142D4C;
-    height: 100vh;
+    margin-left: 16.66%; // يعادل col-2
 }
 
-.hyder{
+body.nav-collapsed #home {
+    margin-left: 8.33%; // يعادل col-1
+}
+
+.nav-bar {
+    background-color: #142D4C;
+    height: 100vh;
+    // position: fixed;
+    background-color: #142D4C;
+    height: 100vh;
+    position: fixed; // 👈 فعّال
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.hyder {
     height: 50px;
-box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     background-color: white;
 }
 
-.navbarcontrolicon{
+.navbarcontrolicon {
     margin-top: 9px;
     font-size: 20px;
 }
 
 .side-menu-link {
-    text-decoration: none;   
-    color: inherit;          
-    display: block;          
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .side-menu-item {
-    display: flex;           
-    align-items: center;     
-    gap: 10px;   
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-top: 20px;
 }
 
@@ -35,56 +51,59 @@ box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
 }
 
 .side-menu-profile {
-    width: 30px;            
-    height: 30px;            
-    border-radius: 50%;     
-    object-fit: cover;    
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
     display: flex;
 }
 
 .side-menu-profile-big {
-    width: 45px !important;      
+    width: 45px !important;
     height: 45px !important;
     border-radius: 50%;
     object-fit: cover;
     position: relative;
     transition: all 0.3s ease;
     display: flex;
-    justify-content: center;  
+    justify-content: center;
 
 }
 
-.menu-container{
+.menu-container {
     margin-top: 32px;
 }
 
 .side-menu-icon {
-display: flex;
-font-size: 18px;
-color: white;
+    display: flex;
+    font-size: 18px;
+    color: white;
 
 }
 
 .side-menu-icon-big {
- font-size: 20px;
-  display: flex;
-    justify-content: center; 
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.side-menu-title{ 
+.side-menu-title {
     margin-top: 5px;
     font-family: "NotoKufiArabic";
     color: white;
     font-size: 14px;
 }
-.logout-item{
+
+.logout-item {
     margin-top: 55px;
 }
+
 .logout-icon {
     display: flex;
     font-size: 18px;
     color: red;
 }
+
 .side-menu-icon-big {
     font-size: 20px;
     display: flex;
