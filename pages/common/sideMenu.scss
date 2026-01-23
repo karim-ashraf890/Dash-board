@@ -1,19 +1,13 @@
-// #home {
-//     background-color: #F5F5F5;
-// }
 #home {
     background-color: #F5F5F5;
-    margin-left: 16.66%; // يعادل col-2
+    margin-left: 16.66%;
 }
 
 body.nav-collapsed #home {
-    margin-left: 8.33%; // يعادل col-1
+    margin-left: 8.33%;
 }
 
 .nav-bar {
-    background-color: #142D4C;
-    height: 100vh;
-    // position: fixed;
     background-color: #142D4C;
     height: 100vh;
     position: fixed; // 👈 فعّال
