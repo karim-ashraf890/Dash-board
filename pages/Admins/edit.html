@@ -12,7 +12,6 @@
 
         <div class="row">
             <div class="col-2 d-flex flex-column nav-bar" id="navBar">
-
                 <!-- Profile -->
                 <a href="/my-profile.html" class="side-menu-link">
                     <div class="side-menu-item">
@@ -155,10 +154,90 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
 
-    </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="add-admin">Add admin</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="add-form">
+                                    <div class="avatar-box text-center">
+                                        <img src="../../assets/imge/avatar_holder_dashboard.gif" alt="profile"
+                                            id="avatarPreview">
+                                        <input type="file" id="avatarInput" hidden>
+                                    </div>
+                                    <div class="row p-4">
+                                        <div class="col-6">
+                                            <label class="firstName-label">First name</label>
+                                            <input type="text" class="form-control firstName-input" id="firstName"
+                                                placeholder="First name">
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label class="lastName-label">Last name</label>
+                                            <input type="text" class="form-control lastName-input" id="lastName"
+                                                placeholder="Last name">
+                                        </div>
+                                    </div>
+
+                                    <div class="row p-4">
+                                        <div class="col-6 mb-3">
+                                            <label class="email-label">Email</label>
+                                            <input type="email" class="form-control email-input" id="email"
+                                                placeholder="Enter email">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label class="phone-label">Phone number</label>
+                                            <div class="d-flex phone-box">
+                                                <select class="form-control country-select" id="countryCode">
+                                                    <option value="" disabled selected>Country</option>
+                                                    <option value="+20">EG </option>
+                                                    <option value="+966">SA </option>
+                                                </select>
+                                                <input type="text" class="form-control phone-input" id="phone"
+                                                    placeholder="Phone number">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container mt-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <strong>Permissions</strong>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="selectAllPermissions">
+                                                    <label class="form-check-label" for="selectAllPermissions">
+                                                        All
+                                                    </label>
+                                                </div>
+                                                <div class="row" class="row" id="permissionsContainer">
+                                                    <!-- Dynamic permissions will be injected here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <button id="submit-btn">Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
 
 </body>
 

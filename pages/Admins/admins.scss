@@ -64,7 +64,8 @@
     box-shadow: 0 0 8px rgba(125, 167, 227, 0.7);
     transform: scale(1.03);
 }
-.tibol-scroll{
+
+.tibol-scroll {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -77,8 +78,9 @@
     font-family: "NotoKufiArabic";
     background: white;
     border-radius: 15px;
-    overflow: hidden; /* مهم علشان يعمل كيرف الهيدر */
-    box-shadow: 0 0 10px rgba(0,0,0,0.12);
+    overflow: hidden;
+    /* مهم علشان يعمل كيرف الهيدر */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
 }
 
 /* الهيدر */
@@ -130,3 +132,46 @@
     color: black;
 }
 
+.actions-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.actions-menu {
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+}
+
+.actions-dropdown {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    min-width: 110px;
+    display: none;
+    z-index: 100;
+}
+
+.actions-wrapper:hover .actions-dropdown {
+    display: block;
+}
+
+.action-item {
+    padding: 8px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.action-item:hover {
+    background: #f1f1f1;
+}
+
+.action-item.delete {
+    color: #c0392b;
+}

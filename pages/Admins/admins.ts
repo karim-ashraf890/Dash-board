@@ -114,7 +114,20 @@ function renderAdmins(admins: {
         const td10 = document.createElement("td");
 
         td10.classList.add("actions-col");
-        td10.innerHTML = `<span class="actions-menu">⋮</span>`;
+        td10.innerHTML = `
+<div class="actions-wrapper">
+    <span class="actions-menu"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+    <div class="actions-dropdown">
+        <div class="action-item edit">
+            <i class="fa-solid fa-pen"></i> Edit
+        </div>
+        <div class="action-item delete">
+            <i class="fa-solid fa-trash"></i> Delete
+        </div>
+    </div>
+</div>
+`;
+
 
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -128,6 +141,11 @@ function renderAdmins(admins: {
         tr.appendChild(td10);
 
         tbody.appendChild(tr);
+
+        const editBtn = tr.querySelector('.action-item.edit') as HTMLElement;
+        editBtn.addEventListener('click', () => {
+            window.location.href = `edit.html?id=${id}`;
+        });
     }
 }
 
