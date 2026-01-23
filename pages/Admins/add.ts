@@ -182,7 +182,7 @@ selectAll.addEventListener("change", function () {
 function updateSelectAllState() {
     const permissionCheckboxes = document.querySelectorAll<HTMLInputElement>(".perm-input");
     const allChecked = Array.from(permissionCheckboxes).every(cb => cb.checked);
-    selectAll.checked = allChecked; // لو كلهم checked يبقى All checked
+    selectAll.checked = allChecked;
 }
 interface Permission {
     id: number;
@@ -267,21 +267,24 @@ submitbtn.addEventListener("click", () => {
     const email = (document.getElementById("email") as HTMLInputElement).value;
     const phone = (document.getElementById("phone") as HTMLInputElement).value;
     const phoneCode = (document.getElementById("countryCode") as HTMLSelectElement).value;
-
-    // const apiUrl = "http://localhost:9696";
+    const password = (document.getElementById("Password") as HTMLInputElement).value;
+    const permissionCheckboxes = document.querySelectorAll<HTMLInputElement>(".perm-input:checked");
+    const selectedPermissions: number[] = Array.from(permissionCheckboxes).map(cb => Number(cb.value));
 
     const formData = new FormData();
-
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("phone_code", phoneCode.replace("+", ""));
     formData.append("phone_number", phone);
+    formData.append("password", password);
 
+    for (let i = 0; i < selectedPermissions.length; i++) {
+        formData.append("permissions[]", selectedPermissions[i].toString());
+    }
     if (avatarInput.files && avatarInput.files.length > 0) {
         formData.append("profile_image", avatarInput.files[0]);
     }
-
     sendRequest(apiUrl, formData);
 });
 
@@ -294,7 +297,9 @@ function sendRequest(apiUrl: string, formData: FormData) {
     })
         .then((response) => {
             console.log("Success:", response.data);
-            alert("Admin added successfully!");
+            // alert("Admin added successfully!");
+            window.location.href = "/admins.html";
+
         })
         .catch((error) => {
             if (error.response && error.response.status === 401) {
@@ -310,7 +315,9 @@ function sendRequest(apiUrl: string, formData: FormData) {
                         })
                             .then((response) => {
                                 console.log("Success:", response.data);
-                                alert("Admin added successfully!");
+                                // alert("Admin added successfully!");
+                                window.location.href = "/admins.html";
+
                             })
                             .catch((error) => {
                                 console.log(error.response.data.error.message)

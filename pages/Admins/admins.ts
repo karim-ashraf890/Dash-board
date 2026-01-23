@@ -131,8 +131,32 @@ function renderAdmins(admins: {
     }
 }
 
-function getAdmins() {
-    axios.get(apiUrl + "/admins?page=1",
+
+function renderPagination(totalCount: number) {
+
+    const totalPages = Math.ceil(totalCount / 5);
+
+    let btnContainer = document.getElementById("pagination") as HTMLElement;
+    btnContainer.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        let btn = document.createElement("button");
+        btn.className = "btn btn-sm btn-outline-primary";
+        btn.innerText = i.toString();
+        btn.addEventListener("click", function () {
+            window.location.href = `/admins.html?page=${i}`;
+        });
+
+        btnContainer.appendChild(btn);
+    }
+}
+
+function getAdmins(pageNumer: number = 1, search: string) {
+    let apiUrlCall = `${apiUrl}/admins?page=${pageNumer}`;
+    if (search) {
+        apiUrlCall += `&search=${search}`
+    }
+    axios.get(apiUrlCall,
         {
             headers: {
                 Authorization: token
@@ -140,6 +164,7 @@ function getAdmins() {
         })
         .then((response) => {
             renderAdmins(response.data.admins);
+            renderPagination(response.data.totalCount)
         })
         .catch((error) => {
             if (error.response && error.response.status === 401) {
@@ -156,14 +181,46 @@ function getAdmins() {
                     })
                     .then((response) => {
                         renderAdmins(response.data.admins);
+                        renderPagination(response.data.totalCount)
+
                     })
                     .catch((error) => {
                         localStorage.clear();
                         window.location.href = "/login.html";
                     });
-
             }
         });
 }
 
-getAdmins();
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+// // urlParams.set('search', 'ooo');
+const newUrl = window.location.pathname + '?' + urlParams.toString();
+window.history.replaceState(null, '', newUrl);
+getAdmins(parseInt(urlParams.get('page')), urlParams.get('search'));
+
+function initSearch() {
+
+    var input = document.querySelector('.search-input') as HTMLInputElement;
+    var params = new URLSearchParams(window.location.search);
+    var oldSearch = params.get('search');
+    if (oldSearch) {
+        input.value = oldSearch;
+    }
+
+    input.addEventListener('input', function () {
+
+        var value = input.value.trim();
+
+        var newParams = new URLSearchParams(window.location.search);
+        newParams.set('search', value);
+        newParams.set('page', '1');
+
+        var newUrl = window.location.pathname + '?' + newParams.toString();
+        window.history.replaceState(null, '', newUrl);
+
+        getAdmins(1, value);
+    });
+}
+
+initSearch()
