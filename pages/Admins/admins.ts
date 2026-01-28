@@ -146,9 +146,23 @@ function renderAdmins(admins: {
         editBtn.addEventListener('click', () => {
             window.location.href = `edit.html?id=${id}`;
         });
+
+        const deleteBtn = tr.querySelector('.action-item.delete') as HTMLElement;
+        deleteBtn.addEventListener('click', () => {
+            if (!confirm("Delete this admin?")) return;
+            axios.delete(`${apiUrl}/admins/${id}`, {
+                headers: { Authorization: token }
+            })
+                .then(() => {
+                    alert("Deleted successfully");
+                    getAdmins(1, "");
+                })
+                .catch(() => {
+                    alert("Failed to delete");
+                });
+        });
     }
 }
-
 
 function renderPagination(totalCount: number) {
 

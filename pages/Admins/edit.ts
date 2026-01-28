@@ -28,6 +28,22 @@ let selectedAvatarFile: File | null = null;
 const avatarInput = document.getElementById("avatarInput") as HTMLInputElement;
 const avatarPreview = document.getElementById("avatarPreview") as HTMLImageElement;
 
+// 🔹 Select All checkbox
+const selectAll = document.getElementById("selectAllPermissions") as HTMLInputElement;
+
+selectAll.addEventListener("change", function () {
+    const permissionCheckboxes = document.querySelectorAll<HTMLInputElement>(".perm-input");
+    for (let i = 0; i < permissionCheckboxes.length; i++) {
+        permissionCheckboxes[i].checked = selectAll.checked;
+    }
+});
+
+function updateSelectAllState() {
+    const permissionCheckboxes = document.querySelectorAll<HTMLInputElement>(".perm-input");
+    const allChecked = Array.from(permissionCheckboxes).every(cb => cb.checked);
+    selectAll.checked = allChecked;
+}
+
 avatarPreview.addEventListener("click", () => {
     avatarInput.click();
 });
@@ -55,11 +71,9 @@ function getAdmin(id: number) {
     })
         .then(response => {
             fillForm(response.data);
-            console.log(response)
         })
         .catch(error => {
             if (error.response && error.response.status === 401) {
-                // تجديد التوكن
                 refreshTokenFun(token, refreshToken)
                     .then(tokens => {
                         token = tokens.token;
@@ -71,7 +85,7 @@ function getAdmin(id: number) {
                     .then(response => {
                         fillForm(response.data);
                     })
-                    .catch(err => {
+                    .catch(() => {
                         localStorage.clear();
                         window.location.href = "/login.html";
                     });
@@ -84,50 +98,35 @@ function getAdmin(id: number) {
 
 // ----- 7️⃣ دالة لملء الفورم مع الصورة -----
 function fillForm(admin: any) {
-    if (admin.avatar_url && admin.avatar_url !== "") {
-        avatarPreview.src = admin.avatar_url;
-    } else {
-        avatarPreview.src = "../../assets/imge/avatar_holder_dashboard.gif";
-    }
 
-    const firstNameInput = document.getElementById("firstName") as HTMLInputElement;
-    firstNameInput.value = admin.first_name || "";
+    avatarPreview.src = admin.avatar_url && admin.avatar_url !== ""
+        ? admin.avatar_url
+        : "../../assets/imge/avatar_holder_dashboard.gif";
 
-    const lastNameInput = document.getElementById("lastName") as HTMLInputElement;
-    lastNameInput.value = admin.last_name || "";
-
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-    emailInput.value = admin.user.email || "";
+    (document.getElementById("firstName") as HTMLInputElement).value = admin.first_name || "";
+    (document.getElementById("lastName") as HTMLInputElement).value = admin.last_name || "";
+    (document.getElementById("email") as HTMLInputElement).value = admin.user.email || "";
 
     const countrySelect = document.getElementById("countryCode") as HTMLSelectElement;
     let phoneCode = admin.user.phone_code || "";
-    if (!phoneCode.startsWith("+")) {
-        phoneCode = "+" + phoneCode;
-    }
+    if (!phoneCode.startsWith("+")) phoneCode = "+" + phoneCode;
     countrySelect.value = phoneCode;
 
-    const phoneInput = document.getElementById("phone") as HTMLInputElement;
-    phoneInput.value = admin.user.phone_number || "";
+    (document.getElementById("phone") as HTMLInputElement).value = admin.user.phone_number || "";
 
-    const permissions = admin.user.permissions;
-    console.log(permissions);
+    // 🔹 صلاحيات الأدمن
+    const adminPermissionIds = admin.user.permissions.map((p: any) => p.id);
     const container = document.getElementById("permissionsContainer") as HTMLElement;
-
-
-
-
 
     axios.get(apiUrl + "/permissions")
         .then(response => {
 
-            const permissions = response.data.permissions;
-            const container = document.getElementById("permissionsContainer") as HTMLElement;
-
+            const allPermissions = response.data.permissions;
             container.innerHTML = "";
 
-            for (let i = 0; i < permissions.length; i++) {
+            for (let i = 0; i < allPermissions.length; i++) {
 
-                const perm = permissions[i];
+                const perm = allPermissions[i];
 
                 const col = document.createElement("div");
                 col.className = "col-md-3 col-sm-6 mb-2 perm-col";
@@ -141,6 +140,13 @@ function fillForm(admin: any) {
                 input.value = perm.id.toString();
                 input.id = "perm_" + perm.id;
 
+                // ✅ مقارنة صلاحيات الأدمن
+                if (adminPermissionIds.includes(perm.id)) {
+                    input.checked = true;
+                }
+
+                input.addEventListener("change", updateSelectAllState);
+
                 const label = document.createElement("label");
                 label.className = "form-check-label perm-label";
                 label.htmlFor = input.id;
@@ -150,18 +156,11 @@ function fillForm(admin: any) {
                 formCheck.appendChild(label);
                 col.appendChild(formCheck);
                 container.appendChild(col);
-                for (let i = 0; i < admin.user.permissions; i++) {
-                    console.log("hiiiiii" + i)
-                }
             }
 
+            updateSelectAllState();
         })
-        .catch(function (error) {
-            console.log(error);
-        })
-
-
-
+        .catch(error => console.log(error));
 }
 
 if (adminId) {
@@ -171,37 +170,34 @@ if (adminId) {
 // ----- 9️⃣ حفظ التعديلات مع الصورة -----
 const submitBtn = document.getElementById("submit-btn");
 submitBtn?.addEventListener("click", () => {
-    const data = {
-        first_name: (document.getElementById("firstName") as HTMLInputElement).value,
-        last_name: (document.getElementById("lastName") as HTMLInputElement).value,
-        email: (document.getElementById("email") as HTMLInputElement).value,
-        phone_code: (document.getElementById("phone") as HTMLInputElement).value,
-        phone_number: (document.getElementById("phone") as HTMLInputElement).value,
-    };
 
     const formData = new FormData();
-    formData.append("first_name", data.first_name);
-    formData.append("last_name", data.last_name);
-    formData.append("email", data.email);
-    formData.append("phone_code", data.phone_code);
-    formData.append("phone_number", data.phone_number);
+
+    formData.append("firstName", (document.getElementById("firstName") as HTMLInputElement).value);
+    formData.append("lastName", (document.getElementById("lastName") as HTMLInputElement).value);
+    formData.append("email", (document.getElementById("email") as HTMLInputElement).value);
+    formData.append("phone_code", (document.getElementById("countryCode") as HTMLSelectElement).value);
+    formData.append("phone_number", (document.getElementById("phone") as HTMLInputElement).value);
 
     if (selectedAvatarFile) {
         formData.append("avatar", selectedAvatarFile);
     }
 
-    axios.put(`${apiUrl}/admins/${adminId}`, formData, {
-        headers: {
-            Authorization: token,
-            "Content-Type": "multipart/form-data"
-        }
+    const checkedPermissions = document.querySelectorAll<HTMLInputElement>(".perm-input:checked");
+    checkedPermissions.forEach(cb => {
+        formData.append("permissions[]", cb.value);
+    });
+
+    axios.post(`${apiUrl}/admins/${adminId}`, formData, {
+        headers: { Authorization: token }
     })
         .then(() => {
             alert("Admin updated successfully!");
             window.location.href = "/admins.html";
         })
         .catch(err => {
-            console.error(err);
+            console.log(err.response?.data);
             alert("Failed to update admin.");
         });
 });
+

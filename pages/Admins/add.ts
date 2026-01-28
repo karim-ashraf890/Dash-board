@@ -360,6 +360,8 @@ function sendRequest(apiUrl: string, formData: FormData) {
 
 
 
+
+
 // function uploadFileToServer(file: File) {
 //     const formData = new FormData();
 //     formData.append("profile_image", file);
