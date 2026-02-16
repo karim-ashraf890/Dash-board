@@ -14,7 +14,12 @@ module.exports = {
         settings: './pages/settings/settings.ts',
         admins: './pages/Admins/admins.ts',
         addAdmin: './pages/Admins/add.ts',
-        editAdmin: './pages/Admins/edit.ts'
+        editAdmin: './pages/Admins/edit.ts',
+        trainees: './pages/Trainees/trainees.ts',
+        addTrainees: './pages/Trainees/add.ts',
+        editTrainees: './pages/Trainees/edit.ts',
+        organizations: './pages/Organizations/organizations.ts'
+
     },
 
     module: {
@@ -71,11 +76,11 @@ module.exports = {
             template: './pages/Admins/admins.html',
             chunks: ['admins'],
         }),
-        new HtmlWebpackPlugin({
-            filename: 'admins.html',
-            template: './pages/Admins/admins.html',
-            chunks: ['admins'],
-        }),
+        // new HtmlWebpackPlugin({
+        //     filename: 'admins.html',
+        //     template: './pages/Admins/admins.html',
+        //     chunks: ['admins'],
+        // }),
         new HtmlWebpackPlugin({
             filename: 'add.html',
             template: './pages/Admins/add.html',
@@ -85,6 +90,27 @@ module.exports = {
             filename: 'edit.html',
             template: './pages/Admins/edit.html',
             chunks: ['editAdmin'],   // ✅
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'trainees.html',
+            template: './pages/Trainees/trainees.html',
+            chunks: ['trainees'],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'trainees-add.html',
+            template: './pages/Trainees/add.html',
+            chunks: ['addTrainees'],   // ✅ صح
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'trainees-edit.html',
+            template: './pages/Trainees/edit.html',
+            chunks: ['editTrainees'],  // ✅ صح
+        }),
+
+        new HtmlWebpackPlugin({
+            filename: 'organizations.html',
+            template: './pages/Organizations/organizations.html',
+            chunks: ['organizations'],
         }),
 
         new CopyWebpackPlugin({

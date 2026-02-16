@@ -12,14 +12,14 @@ if (!token) {
 
 let refreshToken = localStorage.getItem("refreshToken");
 
-const addNewBtn = document.getElementById("addNewBtn");
+const addNewBtn = document.getElementById("addNewBtn") as HTMLElement;
 
 addNewBtn.addEventListener("click", () => {
     window.location.href = "add.html";
 });
 
 
-const tbody = document.getElementById("adminsTableBody");
+const tbody = document.getElementById("adminsTableBody") as HTMLElement;
 
 const apiUrl = "http://127.0.0.1:9696";
 

@@ -1,6 +1,8 @@
 import '../../global.scss';
 import axios from "axios";
 
+
+
 let token = localStorage.getItem("accessToken");
 if (!token) {
     window.location.href = "/login.html";
