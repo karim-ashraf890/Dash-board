@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export function refreshTokenFun(token: string, refreshToken: string) {
+export function refreshTokenFun(refreshToken: string) {
     return axios.get("http://127.0.0.1:9696/authentication/refresh-token", {
         headers: {
             Authorization: refreshToken

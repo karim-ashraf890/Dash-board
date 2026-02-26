@@ -10,7 +10,7 @@ if (!token) {
     window.location.href = "/login.html";
 }
 
-let refreshToken = localStorage.getItem("refreshToken");
+let refreshToken: any = localStorage.getItem("refreshToken");
 
 const addNewBtn = document.getElementById("addNewBtn") as HTMLElement;
 
@@ -200,7 +200,7 @@ function getAdmins(pageNumer: number = 1, search: string) {
         })
         .catch((error) => {
             if (error.response && error.response.status === 401) {
-                refreshTokenFun(token, refreshToken)
+                refreshTokenFun(refreshToken)
                     .then((tokens) => {
                         token = tokens.token;
                         refreshToken = tokens.refreshToken;
@@ -226,7 +226,7 @@ function getAdmins(pageNumer: number = 1, search: string) {
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-getAdmins(parseInt(urlParams.get('page')), urlParams.get('search'));
+getAdmins(parseInt(urlParams.get('page') as any), urlParams.get('search') as any);
 
 function initSearch() {
 
