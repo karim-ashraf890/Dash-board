@@ -252,4 +252,58 @@ function initSearch() {
     });
 }
 
-initSearch()
+initSearch();
+
+interface ILaw {
+    date: string;
+    hitGuy(): any;
+}
+
+abstract class BaseLawyer {
+    abstract reviewCrime(): any;
+
+    seeData() {
+        console.log("Data")
+    }
+}
+
+class GeneralLawyer extends BaseLawyer implements ILaw {
+    date = "koo";
+    reviewCrime() {
+        console.log("review");
+        this.hitGuy();
+    }
+    seeData(): void {
+        super.seeData();
+
+    }
+    hitGuy() {
+
+    }
+}
+
+class Lawyer {
+    name: string | undefined;
+
+    constructor(firstName: string) {
+        this.name = firstName;
+    }
+    // public ,
+    // not use from object => protected, private
+    reviewCrime() {
+        console.log(this.name)
+    }
+}
+
+class LawyerCars extends Lawyer { //Inheritance
+    constructor() {
+        super("karim");
+    }
+}
+
+const lawyerObj = new Lawyer("ahmed"); // create object
+const lawyerCarsObj = new LawyerCars();
+
+lawyerObj.reviewCrime();
+
+lawyerCarsObj.reviewCrime();
